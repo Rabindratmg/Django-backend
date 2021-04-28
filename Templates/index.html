@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this is django website</title>
+</head>
+<body>
+    {% block content %}
+        <h1>Hello world</h1>
+        {% for i in a %}
+            <p>{{ i.item_name }}</p>
+            <p>{{ i.price }}</p>
+        {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="item_name">
+        <input type="number" name="price">
+        <input type="submit" name="submit">
+    </form>
+    {% endblock %}
+</body>
+</html>
