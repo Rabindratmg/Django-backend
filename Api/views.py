@@ -1,50 +1,42 @@
+
 from django.shortcuts import render
 from .models import Menu, Cart
-from .seralizer import MenuSerializer
-from django.http import JsonResponse,request
-from rest_framework.parsers import JSONParser
+from .seralizer import MenuSerializer,CartSerializer, UserSerializer
+from django.http import request
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import viewsets
+from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 # Create your views here.
+
+
 
 
 def home(request):
     if request.method == "GET":
         a = Menu.objects.all()
     elif request.method == "POST":
-        a = Menu.objects.create(item_name=request.item_name, price=request.price)
+        a = Menu.objects.create(item_name=request.POST.get('item'), price=request.POST.get('price'))
         a.save()
+        a=Menu.objects.all()
     return render(request, "index.html", {"a": a})
+    
+
+class MenuList(viewsets.ModelViewSet):
+    queryset= Menu.objects.all()
+    serializer_class = MenuSerializer
+
+class CartList(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer 
 
 
-def menu_list(request):
-    if request.method == "GET":
-        menu = Menu.objects.all()
-        serializer = MenuSerializer(menu, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == "post":
-        data = JSONParser().parse(request)
-        serializer = MenuSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.erros, status=400)
-
-
-
-def cart_list(request):
-    if request.method == "GET":
-        cart = Cart.objects.all()
-        serializer = MenuSerializer(cart, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == "post":
-        data = JSONParser().parse(request)
-
-        serializer = MenuSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.erros, status=400)
-
+class UserList(viewsets.ModelViewSet):
+    authentication_classes=[TokenAuthentication]
+    permission_classes =[IsAuthenticated]
+    queryset= User.objects.all()
+    serializer_class = UserSerializer

@@ -11,9 +11,9 @@
             <p>{{ i.item_name }}</p>
             <p>{{ i.price }}</p>
         {% endfor %}
-    <form method="post">
+    <form method="POST">
         {% csrf_token %}
-        <input type="text" name="item_name">
+        <input type="text" name="item">
         <input type="number" name="price">
         <input type="submit" name="submit">
     </form>

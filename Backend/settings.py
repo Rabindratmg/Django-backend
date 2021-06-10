@@ -55,7 +55,6 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://www.rabindratamang.com.np",
 ]
 
 ROOT_URLCONF = 'Backend.urls'
@@ -63,7 +62,7 @@ ROOT_URLCONF = 'Backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [Path(BASE_DIR, "Templates")],
+        'DIRS': [BASE_DIR/ "Templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
