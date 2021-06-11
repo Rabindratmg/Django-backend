@@ -19,6 +19,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('private/', admin.site.urls),
     path("",include('Api.urls'), name="menulist"),
 ]

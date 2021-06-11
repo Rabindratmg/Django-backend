@@ -16,7 +16,13 @@ class Menu(models.Model):
 
 
 class Cart(models.Model):
-    user = OneToOneField(User,default='anomonus',blank=True,on_delete=models.CASCADE)
-    menus = models.ManyToManyField(Menu)
+    item_name = models.CharField(max_length=200)
+    price = models.IntegerField(null=False)
+    quantity = models.PositiveIntegerField()
+
+
+    def __str__(self):
+        return self.item_name
+    
 
     
