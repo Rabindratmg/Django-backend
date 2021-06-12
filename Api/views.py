@@ -37,6 +37,6 @@ class CartList(viewsets.ModelViewSet):
 
 class UserList(viewsets.ModelViewSet):
     authentication_classes=[TokenAuthentication]
-    permission_classes =[IsAuthenticated]
+    permission_classes=[IsAuthenticated]
     queryset= User.objects.all()
     serializer_class = UserSerializer
